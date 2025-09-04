@@ -1,0 +1,31 @@
+<div class="login-container">
+    <div class="login-card">
+      <div class="logo-section">
+        <img src="assets/images/Logo.png"  alt="Logo" class="logo"/>
+        <h2 class="app-title">Aasai Sengundhar Mudaliyar Matrimony</h2>
+      </div>
+  
+      <h3 class="form-title">Login</h3>
+  
+      <!-- Login Form -->
+      <form (ngSubmit)="onLogin()">
+        <input [(ngModel)]="email" name="email" type="email" placeholder="Email" class="form-input" required>
+        <input [(ngModel)]="password" name="password" type="password" placeholder="Password" class="form-input" required>
+  
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+  
+      <p class="divider">or</p>
+  
+      <!-- Google One-Tap -->
+      <button (click)="loginWithGoogle()" class="btn btn-google">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-icon">
+        Continue with Google
+      </button>
+  
+      <p class="signup-link">
+        Don’t have an account? <a routerLink="/signup">Sign Up</a>
+      </p>
+    </div>
+  </div>
+  

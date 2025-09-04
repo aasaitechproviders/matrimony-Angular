@@ -1,0 +1,30 @@
+<div class="login-container">
+    <div class="login-card">
+      <div class="logo-section">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+        <h2 class="app-title">Aasai Sengundhar Mudaliyar Matrimony</h2>
+      </div>
+  
+      <h3 class="form-title">Sign Up</h3>
+  
+      <form (ngSubmit)="onSignup()">
+        <input [(ngModel)]="email" name="email" type="email" placeholder="Email" class="form-input" required>
+        <input [(ngModel)]="phone" name="phone" type="text" placeholder="Phone Number" class="form-input" required>
+        <input [(ngModel)]="password" name="password" type="password" placeholder="Password" class="form-input" required>
+  
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+  
+      <p class="divider">or</p>
+  
+      <button (click)="signupWithGoogle()" class="btn btn-google">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-icon">
+        Sign Up with Google
+      </button>
+  
+      <p class="signup-link">
+        Already have an account? <a routerLink="/login">Login</a>
+      </p>
+    </div>
+  </div>
+  
