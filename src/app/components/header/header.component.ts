@@ -1,32 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login/login.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']   // <-- fixed styleUrls
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   userName: string | null = null;
-  constructor(private loginService: LoginService, private router: Router) {}
 
-  // check if token exists
+  constructor(public loginService: LoginService, private router: Router) {}
+
+  ngOnInit(): void {
+    // Example: if you store name in token/localStorage
+    this.userName = localStorage.getItem('name');
+  }
+
   isAuthenticated(): boolean {
     return !!this.loginService.getToken();
   }
 
-  // logout function
   logout(): void {
     this.loginService.logout().subscribe({
       next: () => {
+        localStorage.clear(); // clear everything
         this.router.navigate(['/login']);
       },
       error: () => {
-        this.router.navigate(['/login']); // even if server fails, clear client token
+        localStorage.clear();
+        this.router.navigate(['/login']);
       }
     });
+  }
+  preference(): void {
+    this.router.navigate(['/preferences']);
+  }
+  profile(): void {
+    this.router.navigate(['/profile']);
+  }
+  match(): void {
+    this.router.navigate(['/match']);
   }
 }

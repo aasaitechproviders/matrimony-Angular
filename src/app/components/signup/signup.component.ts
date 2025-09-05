@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { SignupService } from '../../services/signup/signup.service';
 
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
-  imports: [FormsModule],
+  imports: [FormsModule,RouterModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })

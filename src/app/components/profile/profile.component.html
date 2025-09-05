@@ -18,7 +18,7 @@
   </div>
 
   <form (ngSubmit)="onSaveProfile()" #profileForm="ngForm">
-    <!-- 🔹 Basic Info -->
+    <!-- Basic -->
     <label>Full Name</label>
     <input type="text" [(ngModel)]="profile.fullName" name="fullName" required />
 
@@ -41,29 +41,32 @@
     <label>Birth Place</label>
     <input type="text" [(ngModel)]="profile.birthPlace" name="birthPlace" />
 
-    <!-- 🔹 Astrology Info -->
+    <!-- Astrology -->
     <label>Raasi</label>
     <select [(ngModel)]="profile.raasi" name="raasi">
-      <option *ngFor="let r of raasiList" [value]="r">{{r}}</option>
+      <option value="">-- Select --</option>
+      <option *ngFor="let r of raasiList" [value]="r">{{ r }}</option>
     </select>
 
     <label>Natchathiram</label>
     <select [(ngModel)]="profile.natchathiram" name="natchathiram">
-      <option *ngFor="let n of natchathiramList" [value]="n">{{n}}</option>
+      <option value="">-- Select --</option>
+      <option *ngFor="let n of natchathiramList" [value]="n">{{ n }}</option>
     </select>
 
     <label>Laknam</label>
     <select [(ngModel)]="profile.laknam" name="laknam">
-      <option *ngFor="let l of laknamList" [value]="l">{{l}}</option>
+      <option value="">-- Select --</option>
+      <option *ngFor="let l of laknamList" [value]="l">{{ l }}</option>
     </select>
 
     <label>Blood Group</label>
     <select [(ngModel)]="profile.bloodGroup" name="bloodGroup">
       <option value="">-- Select --</option>
-      <option *ngFor="let bg of bloodGroups" [value]="bg">{{bg}}</option>
+      <option *ngFor="let bg of bloodGroups" [value]="bg">{{ bg }}</option>
     </select>
 
-    <!-- 🔹 Cultural Info -->
+    <!-- Cultural -->
     <label>Religion</label>
     <input type="text" [(ngModel)]="profile.religion" name="religion" />
 
@@ -81,7 +84,7 @@
       <option value="Widowed">Widowed</option>
     </select>
 
-    <!-- 🔹 Work Info -->
+    <!-- Work -->
     <label>Employment Type</label>
     <select [(ngModel)]="profile.employmentType" name="employmentType">
       <option value="">-- Select --</option>
@@ -100,7 +103,7 @@
     <label>Annual Income</label>
     <input type="number" [(ngModel)]="profile.income" name="income" />
 
-    <!-- 🔹 Physical -->
+    <!-- Physical -->
     <label>Height (cm)</label>
     <input type="number" [(ngModel)]="profile.height" name="height" />
 
@@ -124,7 +127,7 @@
       <option value="Heavy">Heavy</option>
     </select>
 
-    <!-- 🔹 Family Info -->
+    <!-- Family -->
     <label>Kulatheivam</label>
     <input type="text" [(ngModel)]="profile.kulatheivam" name="kulatheivam" />
 
@@ -155,22 +158,64 @@
     <label>Family Annual Income</label>
     <input type="number" [(ngModel)]="profile.familyAnnualIncome" name="familyAnnualIncome" />
 
-    <!-- 🔹 Siblings -->
+    <!-- Siblings -->
     <label>Brother Details</label>
     <textarea [(ngModel)]="profile.brotherDetails" name="brotherDetails"></textarea>
 
     <label>Sister Details</label>
     <textarea [(ngModel)]="profile.sisterDetails" name="sisterDetails"></textarea>
 
-    <!-- 🔹 Hobbies -->
+    <!-- Hobbies -->
     <label>Hobbies</label>
     <input type="text" [(ngModel)]="profile.hobbies" name="hobbies" />
 
-    <!-- 🔹 Created Date -->
-    <label>Profile Created Date</label>
-    <input type="date" [(ngModel)]="profile.createdDate" name="createdDate" />
+    <!-- Lifestyle -->
+    <label>Diet</label>
+    <select [(ngModel)]="profile.diet" name="diet">
+      <option value="">-- Select --</option>
+      <option value="Veg">Veg</option>
+      <option value="Non-Veg">Non-Veg</option>
+      <option value="Vegan">Vegan</option>
+      <option value="Eggetarian">Eggetarian</option>
+    </select>
 
-    <!-- 🔹 Photo Upload -->
+    <label>Smoking</label>
+    <select [(ngModel)]="profile.smoking" name="smoking">
+      <option value="">-- Select --</option>
+      <option value="No">No</option>
+      <option value="Yes">Yes</option>
+    </select>
+
+    <label>Drinking</label>
+    <select [(ngModel)]="profile.drinking" name="drinking">
+      <option value="">-- Select --</option>
+      <option value="No">No</option>
+      <option value="Yes">Yes</option>
+    </select>
+
+    <!-- Address (added fields) -->
+    <label>Address Line 1</label>
+    <input type="text" [(ngModel)]="profile.addressLine1" name="addressLine1" />
+
+    <label>Address Line 2</label>
+    <input type="text" [(ngModel)]="profile.addressLine2" name="addressLine2" />
+
+    <label>Country</label>
+    <input type="text" [(ngModel)]="profile.country" name="country" />
+
+    <label>State</label>
+    <input type="text" [(ngModel)]="profile.state" name="state" />
+
+    <label>City</label>
+    <input type="text" [(ngModel)]="profile.city" name="city" />
+
+    <label>Pincode</label>
+    <input type="text" [(ngModel)]="profile.pincode" name="pincode" />
+
+    <label>Profile Created Date</label>
+    <input type="date" [value]="profile.createdDate | date:'yyyy-MM-dd'" disabled />
+
+    <!-- Photos -->
     <label>Upload Photos</label>
     <input type="file" multiple (change)="onFileChange($event)" />
 

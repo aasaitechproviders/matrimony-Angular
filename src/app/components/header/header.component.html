@@ -1,6 +1,14 @@
-<nav *ngIf="isAuthenticated()" class="header">
-    <div class="menu-btn">☰</div>
-    <div class="welcome">Welcome!</div>
-    <button (click)="logout()">Logout</button>
-  </nav>
-  
+<nav *ngIf="isAuthenticated()" class="app-header">
+  <div class="menu-btn">☰</div>
+
+  <div class="welcome-text">
+    Welcome {{ userName || '!' }}
+  </div>
+
+  <div class="actions">
+    <button class="btn" (click)="match()">Match</button>
+    <button class="btn" (click)="profile()">Profile</button>
+    <button class="btn" (click)="preference()">Preference</button>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+</nav>

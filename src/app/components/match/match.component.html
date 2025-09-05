@@ -1,0 +1,104 @@
+<div class="matches-container">
+    <h2>Matched Profiles</h2>
+  
+    <!-- Loader -->
+    <div *ngIf="loading" class="loading">Loading matches…</div>
+  
+    <!-- No matches -->
+    <div *ngIf="!loading && matches.length === 0" class="no-matches">
+      No preferences found.
+    </div>
+  
+    <div class="matches-wrapper" *ngIf="matches.length > 0">
+      <!-- Left list -->
+      <div class="matches-list">
+        <div
+          *ngFor="let m of matches"
+          class="match-card"
+          [class.active]="m.profile.id === selectedProfile?.id"
+          (click)="selectProfile(m.profile)"
+        >
+          <img
+            *ngIf="m.profile.photos?.length > 0"
+            [src]="'data:' + m.profile.photos[0].contentType + ';base64,' + m.profile.photos[0].data"
+            alt="Profile photo"
+          />
+          <div class="match-info">
+            <p><strong>{{ m.profile.fullName }}</strong></p>
+            <p>Age: {{ calculateAge(m.profile.dob) }}</p>
+            <p>{{ m.profile.city || 'N/A' }}</p>
+            <p class="match-score">Match: {{ m.score }}%</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Right detail: Full profile view -->
+      <div class="profile-container" *ngIf="selectedProfile">
+        <h2>{{ selectedProfile.fullName }}'s Profile</h2>
+  
+        <!-- 🔹 Photo viewer -->
+        <div class="photo-viewer" *ngIf="photoUrls.length > 0">
+          <button class="arrow-btn" (click)="prevPhoto()">&#8592;</button>
+          <img [src]="photoUrls[currentPhotoIndex]" alt="Profile Photo" class="clickable"
+               (click)="openFullscreen(currentPhotoIndex)" />
+          <button class="arrow-btn" (click)="nextPhoto()">&#8594;</button>
+        </div>
+  
+        <!-- 🔹 Fullscreen viewer -->
+        <div class="fullscreen-overlay" *ngIf="isFullscreen">
+          <span class="close-btn" (click)="closeFullscreen()">&#10005;</span>
+          <button class="arrow-btn left" (click)="prevPhoto()">&#8592;</button>
+          <img [src]="photoUrls[currentPhotoIndex]" alt="Fullscreen Photo" class="fullscreen-img" />
+          <button class="arrow-btn right" (click)="nextPhoto()">&#8594;</button>
+        </div>
+  
+        <!-- 🔹 Profile Details -->
+        <div class="profile-details">
+          <p><strong>Email:</strong> {{ selectedProfile.email }}</p>
+          <p><strong>Gender:</strong> {{ selectedProfile.gender }}</p>
+          <p><strong>DOB:</strong> {{ selectedProfile.dob }}</p>
+          <p><strong>Birth Time:</strong> {{ selectedProfile.birthTime }}</p>
+          <p><strong>Birth Place:</strong> {{ selectedProfile.birthPlace }}</p>
+          
+          <p><strong>Raasi:</strong> {{ selectedProfile.raasi }}</p>
+          <p><strong>Natchathiram:</strong> {{ selectedProfile.natchathiram }}</p>
+          <p><strong>Laknam:</strong> {{ selectedProfile.laknam }}</p>
+          <p><strong>Blood Group:</strong> {{ selectedProfile.bloodGroup }}</p>
+  
+          <p><strong>Religion:</strong> {{ selectedProfile.religion }}</p>
+          <p><strong>Caste:</strong> {{ selectedProfile.caste }}</p>
+          <p><strong>Mother Tongue:</strong> {{ selectedProfile.motherTongue }}</p>
+          <p><strong>Marital Status:</strong> {{ selectedProfile.maritalStatus }}</p>
+  
+          <p><strong>Employment Type:</strong> {{ selectedProfile.employmentType }}</p>
+          <p><strong>Company:</strong> {{ selectedProfile.companyName }} ({{ selectedProfile.companyAddress }})</p>
+          <p><strong>Income:</strong> {{ selectedProfile.income }}</p>
+  
+          <p><strong>Height:</strong> {{ selectedProfile.height }} cm</p>
+          <p><strong>Weight:</strong> {{ selectedProfile.weight }} kg</p>
+          <p><strong>Complexion:</strong> {{ selectedProfile.complexion }}</p>
+          <p><strong>Body Type:</strong> {{ selectedProfile.bodyType }}</p>
+  
+          <p><strong>Kulatheivam:</strong> {{ selectedProfile.kulatheivam }}</p>
+          <p><strong>Father:</strong> {{ selectedProfile.fatherName }} ({{ selectedProfile.fatherOccupation }}) - {{ selectedProfile.fatherContact }}</p>
+          <p><strong>Mother:</strong> {{ selectedProfile.motherName }} ({{ selectedProfile.motherOccupation }}) - {{ selectedProfile.motherContact }}</p>
+          <p><strong>Family Income:</strong> {{ selectedProfile.familyAnnualIncome }}</p>
+  
+          <p><strong>Brother Details:</strong> {{ selectedProfile.brotherDetails }}</p>
+          <p><strong>Sister Details:</strong> {{ selectedProfile.sisterDetails }}</p>
+  
+          <p><strong>Hobbies:</strong> {{ selectedProfile.hobbies }}</p>
+  
+          <p><strong>Diet:</strong> {{ selectedProfile.diet }}</p>
+          <p><strong>Smoking:</strong> {{ selectedProfile.smoking }}</p>
+          <p><strong>Drinking:</strong> {{ selectedProfile.drinking }}</p>
+  
+          <p><strong>Address:</strong> {{ selectedProfile.addressLine1 }} {{ selectedProfile.addressLine2 }},
+            {{ selectedProfile.city }}, {{ selectedProfile.state }}, {{ selectedProfile.country }} - {{ selectedProfile.pincode }}</p>
+  
+          <p><strong>Profile Created:</strong> {{ selectedProfile.createdDate }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,96 @@
+<div class="pref-wrapper">
+    <h2>Partner Preferences</h2>
+  
+    <form #prefForm="ngForm" (ngSubmit)="save(prefForm)">
+      <div class="grid">
+        <div class="card">
+          <h3>Age Range</h3>
+          <label>Min Age</label>
+          <input type="number" [(ngModel)]="prefs.minAge" name="minAge" />
+          <label>Max Age</label>
+          <input type="number" [(ngModel)]="prefs.maxAge" name="maxAge" />
+        </div>
+  
+        <div class="card">
+          <h3>Height Range (cm)</h3>
+          <label>Min Height</label>
+          <input type="number" [(ngModel)]="prefs.minHeight" name="minHeight" />
+          <label>Max Height</label>
+          <input type="number" [(ngModel)]="prefs.maxHeight" name="maxHeight" />
+        </div>
+  
+        <div class="card">
+            <h3>Religion & Caste</h3>
+          
+            <label>Religion</label>
+            <select [(ngModel)]="prefs.religion" name="religion">
+              <option value="">-- Select Religion --</option>
+              <option value="Hindu">Hindu</option>
+              <option value="Muslim">Muslim</option>
+              <option value="Christian">Christian</option>
+              <option value="Sikh">Sikh</option>
+              <option value="Buddhist">Buddhist</option>
+              <option value="Jain">Jain</option>
+              <option value="Other">Other</option>
+            </select>
+          
+            <label>Caste</label>
+            <input type="text" [(ngModel)]="prefs.caste" name="caste" placeholder="Enter caste (optional)" />
+          </div>
+          
+          
+  
+        <div class="card">
+          <h3>Education & Profession</h3>
+          <label>Education</label>
+          <input type="text" [(ngModel)]="prefs.education" name="education" />
+          <label>Profession</label>
+          <input type="text" [(ngModel)]="prefs.profession" name="profession" />
+        </div>
+  
+        <div class="card">
+          <h3>Location</h3>
+          <label>Country</label>
+          <input type="text" [(ngModel)]="prefs.country" name="country" />
+          <label>State</label>
+          <input type="text" [(ngModel)]="prefs.state" name="state" />
+          <label>City</label>
+          <input type="text" [(ngModel)]="prefs.city" name="city" />
+        </div>
+  
+        <div class="card">
+            <h3>Lifestyle</h3>
+          
+            <label>Diet</label>
+            <select [(ngModel)]="prefs.diet" name="diet">
+              <option value="">-- Select --</option>
+              <option value="Veg">Veg</option>
+              <option value="Non-Veg">Non-Veg</option>
+              <option value="Vegan">Vegan</option>
+              <option value="Eggetarian">Eggetarian</option>
+            </select>
+          
+            <label>Smoking</label>
+            <select [(ngModel)]="prefs.smoking" name="smoking">
+              <option value="">-- Select --</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          
+            <label>Drinking</label>
+            <select [(ngModel)]="prefs.drinking" name="drinking">
+              <option value="">-- Select --</option>
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          </div>
+      </div>
+          
+  
+      <div class="actions">
+        <button type="submit" [disabled]="saving">{{ saving ? 'Saving…' : 'Save Preferences' }}</button>
+        <button type="button" class="danger" (click)="delete()">Clear</button>
+      </div>
+    </form>
+  </div>
+  

@@ -8,7 +8,7 @@ import { ProfileService } from '../../services/profile/profile.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrls: ['./profile.component.css']   // <-- correct property name
 })
 export class ProfileComponent implements OnInit {
   profile: any = {
@@ -19,19 +19,19 @@ export class ProfileComponent implements OnInit {
     dob: '',
     birthTime: '',
     birthPlace: '',
-  
+
     // 🔹 Astrology
     raasi: '',
     natchathiram: '',
     laknam: '',
     bloodGroup: '',
-  
+
     // 🔹 Cultural Info
     religion: '',
     caste: '',
     motherTongue: '',
     maritalStatus: '',
-  
+
     // 🔹 Education / Work
     education: '',
     profession: '',
@@ -39,26 +39,26 @@ export class ProfileComponent implements OnInit {
     companyName: '',
     companyAddress: '',
     income: 0,
-  
+
     // 🔹 Physical
     height: 0,
     weight: 0,
     complexion: '',
     bodyType: '',
-  
+
     // 🔹 Lifestyle
     diet: '',
     smoking: '',
     drinking: '',
-  
-    // 🔹 Address
+
+    // 🔹 Address (added country/state/city)
     addressLine1: '',
     addressLine2: '',
     city: '',
     state: '',
     country: '',
     pincode: '',
-  
+
     // 🔹 Family Info
     kulatheivam: '',
     fatherName: '',
@@ -70,23 +70,24 @@ export class ProfileComponent implements OnInit {
     motherContact: '',
     motherNativePlace: '',
     familyAnnualIncome: 0,
-  
+
     // 🔹 Siblings
-    brotherDetails: '', // JSON or text describing brothers
-    sisterDetails: '',  // JSON or text describing sisters
-  
+    brotherDetails: '',
+    sisterDetails: '',
+
     // 🔹 Other
     hobbies: '',
     createdDate: '',
-  
+
     // 🔹 Photos
     photos: []
   };
-   // 🔹 Dropdown values
-   raasiList: string[] = [
-    'Mesham (Aries)', 'Rishabam (Taurus)', 'Mithunam (Gemini)', 
+
+  // Dropdown lists used in template
+  raasiList: string[] = [
+    'Mesham (Aries)', 'Rishabam (Taurus)', 'Mithunam (Gemini)',
     'Kadagam (Cancer)', 'Simmam (Leo)', 'Kanni (Virgo)',
-    'Thulam (Libra)', 'Viruchigam (Scorpio)', 'Dhanusu (Sagittarius)', 
+    'Thulam (Libra)', 'Viruchigam (Scorpio)', 'Dhanusu (Sagittarius)',
     'Magaram (Capricorn)', 'Kumbam (Aquarius)', 'Meenam (Pisces)'
   ];
 
@@ -107,12 +108,10 @@ export class ProfileComponent implements OnInit {
   bloodGroups: string[] = [
     'A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'
   ];
-  
-  selectedFiles: File[] = [];
-  photoUrls: string[] = [];   // ✅ built from backend photos
-  currentPhotoIndex: number = 0;
 
-  // 🔹 fullscreen viewer state
+  selectedFiles: File[] = [];
+  photoUrls: string[] = [];
+  currentPhotoIndex: number = 0;
   isFullscreen: boolean = false;
 
   constructor(private profileService: ProfileService) {}
@@ -121,7 +120,6 @@ export class ProfileComponent implements OnInit {
     this.loadProfile();
   }
 
-  // ✅ Load profile + build base64 photo URLs
   loadProfile(): void {
     this.profileService.getProfile().subscribe({
       next: (res) => {
@@ -135,19 +133,15 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  // 🔹 Helper: build photo URLs from backend photo objects
   private buildPhotoUrls(photos: any[]): void {
-    this.photoUrls = photos.map((p: any) =>
-      `data:${p.contentType};base64,${p.data}`
-    );
+    // backend returns contentType and base64 data
+    this.photoUrls = photos.map((p: any) => `data:${p.contentType};base64,${p.data}`);
   }
 
-  // ✅ Handle file input
   onFileChange(event: any): void {
     this.selectedFiles = Array.from(event.target.files);
   }
 
-  // ✅ Save (profile + photos)
   onSaveProfile(): void {
     this.profileService.saveProfile(this.profile, this.selectedFiles).subscribe({
       next: (res) => {
@@ -157,43 +151,50 @@ export class ProfileComponent implements OnInit {
         this.buildPhotoUrls(res.photos || []);
         this.currentPhotoIndex = 0;
       },
-      error: () => alert('Error saving profile')
+      error: (err) => {
+        console.error('Save error', err);
+        alert('Error saving profile');
+      }
     });
   }
 
-  // ✅ Delete profile
   onDeleteProfile(): void {
-    if (confirm('Are you sure you want to delete your profile?')) {
-      this.profileService.deleteProfile().subscribe({
-        next: () => {
-          alert('Profile deleted successfully!');
-          this.profile = {};
-          this.photoUrls = [];
-          this.selectedFiles = [];
-          this.currentPhotoIndex = 0;
-        },
-        error: () => alert('Error deleting profile')
-      });
-    }
+    if (!confirm('Are you sure you want to delete your profile?')) return;
+
+    this.profileService.deleteProfile().subscribe({
+      next: () => {
+        alert('Profile deleted successfully!');
+        // reset model
+        this.resetProfileModel();
+      },
+      error: () => alert('Error deleting profile')
+    });
   }
 
-  // ✅ Photo navigation
+  private resetProfileModel(): void {
+    // reset to initial shape (keeps properties)
+    Object.keys(this.profile).forEach(k => {
+      if (Array.isArray(this.profile[k])) this.profile[k] = [];
+      else if (typeof this.profile[k] === 'number') this.profile[k] = 0;
+      else this.profile[k] = '';
+    });
+    this.photoUrls = [];
+    this.selectedFiles = [];
+    this.currentPhotoIndex = 0;
+  }
+
   prevPhoto(): void {
     if (this.photoUrls.length > 0) {
-      this.currentPhotoIndex =
-        (this.currentPhotoIndex - 1 + this.photoUrls.length) %
-        this.photoUrls.length;
+      this.currentPhotoIndex = (this.currentPhotoIndex - 1 + this.photoUrls.length) % this.photoUrls.length;
     }
   }
 
   nextPhoto(): void {
     if (this.photoUrls.length > 0) {
-      this.currentPhotoIndex =
-        (this.currentPhotoIndex + 1) % this.photoUrls.length;
+      this.currentPhotoIndex = (this.currentPhotoIndex + 1) % this.photoUrls.length;
     }
   }
 
-  // ✅ Fullscreen viewer controls
   openFullscreen(index: number): void {
     this.currentPhotoIndex = index;
     this.isFullscreen = true;

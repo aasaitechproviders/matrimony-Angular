@@ -26,15 +26,32 @@ export class LoginService {
     return localStorage.getItem('token');
   }
 
-// ✅ Logout: call backend + clear token
+// ✅ Logout: call backend + clear everything
 logout(): Observable<any> {
-  return this.http.post(`${this.baseUrl}/logout`, {}, { responseType: 'text' })
+  return this.http.post(`${this.baseUrl}/logout`, {}, { responseType: 'text', withCredentials: true })
     .pipe(
       tap(() => {
-        localStorage.removeItem('token'); // clear after server confirms
+        // Clear tokens
+        localStorage.clear();
+        sessionStorage.clear();
+
+        // Delete all non-HttpOnly cookies accessible from JS
+        this.clearAllCookies();
       })
     );
 }
+
+// Utility to clear cookies that JS can access
+private clearAllCookies() {
+  const cookies = document.cookie.split(";");
+
+  for (const cookie of cookies) {
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+  }
+}
+
 
 
   // Google login (redirect to backend OAuth)
