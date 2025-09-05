@@ -1,0 +1,16 @@
+<div class="interest-container">
+    <h2>💌 Interests</h2>
+  
+    <h3>Incoming Requests</h3>
+    <div *ngFor="let i of incoming" class="interest-card">
+      <p><strong>{{ i.fromUser.fullName }}</strong> sent you an interest</p>
+      <button (click)="accept(i.id)">Accept</button>
+      <button (click)="reject(i.id)">Reject</button>
+    </div>
+  
+    <h3>Outgoing Requests</h3>
+    <div *ngFor="let i of outgoing" class="interest-card">
+      <p>You sent interest to <strong>{{ i.toUser.fullName }}</strong> - {{ i.status }}</p>
+    </div>
+  </div>
+  

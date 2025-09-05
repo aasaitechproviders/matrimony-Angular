@@ -6,9 +6,10 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule,FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']   // <-- fixed styleUrls
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   userName: string | null = null;
@@ -16,7 +17,6 @@ export class HeaderComponent implements OnInit {
   constructor(public loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {
-    // Example: if you store name in token/localStorage
     this.userName = localStorage.getItem('name');
   }
 
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.loginService.logout().subscribe({
       next: () => {
-        localStorage.clear(); // clear everything
+        localStorage.clear();
         this.router.navigate(['/login']);
       },
       error: () => {
@@ -36,13 +36,28 @@ export class HeaderComponent implements OnInit {
       }
     });
   }
+
   preference(): void {
     this.router.navigate(['/preferences']);
   }
+
   profile(): void {
     this.router.navigate(['/profile']);
   }
+
   match(): void {
     this.router.navigate(['/match']);
+  }
+
+  search(): void {
+    this.router.navigate(['/search']);
+  }
+
+  chat(): void {
+    this.router.navigate(['/chat']);
+  }
+
+  interest(): void {
+    this.router.navigate(['/interest']);
   }
 }

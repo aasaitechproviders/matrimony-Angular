@@ -234,4 +234,185 @@
   .profile-details p {
     margin: 0;
   }
-    
+  .matches-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .matches-wrapper {
+    display: flex;
+    margin-top: 15px;
+  }
+  
+  .matches-list {
+    flex: 1;
+    max-width: 300px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+    height: 80vh;
+  }
+  
+  .match-card {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .match-card.active {
+    border: 2px solid #007bff;
+    background: #f0f8ff;
+  }
+  
+  .match-card img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 12px;
+  }
+  
+  .match-info {
+    flex: 1;
+  }
+  
+  .badges {
+    margin: 5px 0;
+  }
+  
+  .badge {
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+  .badge.premium {
+    background: gold;
+    color: black;
+    font-weight: bold;
+  }
+  .badge.new {
+    background: green;
+    color: white;
+  }
+  
+  .match-score {
+    margin-top: 5px;
+  }
+  .score-bar {
+    background: #eee;
+    border-radius: 10px;
+    height: 8px;
+    margin-top: 3px;
+  }
+  .score-fill {
+    background: #2196f3;
+    height: 8px;
+    border-radius: 10px;
+  }
+  
+  .mutual {
+    color: #4caf50;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .interest-btn {
+    background: #ff4081;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+  .interest-btn:hover {
+    background: #e91e63;
+  }
+  
+  .profile-container {
+    flex: 2;
+    padding: 20px;
+    overflow-y: auto;
+    height: 80vh;
+  }
+  
+  .photo-viewer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .photo-viewer img {
+    max-height: 300px;
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  .arrow-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 50%;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  .arrow-btn:hover {
+    background: #0056b3;
+  }
+  
+  .fullscreen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fullscreen-img {
+    max-height: 90%;
+    max-width: 90%;
+  }
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  
+  .actions {
+    margin-top: 15px;
+  }
+  .actions button {
+    margin-right: 10px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .actions button:nth-child(1) {
+    background: #ff4081;
+    color: white;
+  }
+  .actions button:nth-child(2) {
+    background: #2196f3;
+    color: white;
+  }
+  .actions button:nth-child(3) {
+    background: #4caf50;
+    color: white;
+  }
+  .actions button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  

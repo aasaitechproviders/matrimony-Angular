@@ -1,0 +1,23 @@
+.search-container {
+    padding: 20px;
+  }
+  .filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .filters label {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+  }
+  .results {
+    margin-top: 20px;
+  }
+  .profile-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+  

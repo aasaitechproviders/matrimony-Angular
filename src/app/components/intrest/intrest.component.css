@@ -1,0 +1,13 @@
+.interest-container {
+    padding: 20px;
+  }
+  .interest-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+  .interest-card button {
+    margin-right: 8px;
+  }
+  

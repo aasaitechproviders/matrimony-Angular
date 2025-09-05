@@ -1,0 +1,35 @@
+<div class="search-container">
+  <h2>🔎 Search Profiles</h2>
+
+  <form (ngSubmit)="applyFilters()">
+    <div class="filters">
+      <label>Religion:
+        <input type="text" [(ngModel)]="filters.religion" name="religion" />
+      </label>
+      <label>Caste:
+        <input type="text" [(ngModel)]="filters.caste" name="caste" />
+      </label>
+      <label>Education:
+        <input type="text" [(ngModel)]="filters.education" name="education" />
+      </label>
+      <label>Income:
+        <input type="text" [(ngModel)]="filters.income" name="income" />
+      </label>
+      <label>Location:
+        <input type="text" [(ngModel)]="filters.location" name="location" />
+      </label>
+    </div>
+    <button type="submit">Apply Filters</button>
+  </form>
+
+  <div class="results">
+    <h3>Results</h3>
+    <div *ngIf="loading">Loading...</div>
+    <div *ngIf="!loading && results.length === 0">No profiles found</div>
+
+    <div *ngFor="let profile of results" class="profile-card">
+      <strong>{{ profile.fullName }}</strong> - {{ profile.city }}
+      <button (click)="viewProfile(profile)">View</button>
+    </div>
+  </div>
+</div>

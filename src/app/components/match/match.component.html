@@ -18,16 +18,40 @@
           [class.active]="m.profile.id === selectedProfile?.id"
           (click)="selectProfile(m.profile)"
         >
+          <!-- Profile Photo -->
           <img
             *ngIf="m.profile.photos?.length > 0"
             [src]="'data:' + m.profile.photos[0].contentType + ';base64,' + m.profile.photos[0].data"
             alt="Profile photo"
           />
+  
+          <!-- Info -->
           <div class="match-info">
             <p><strong>{{ m.profile.fullName }}</strong></p>
             <p>Age: {{ calculateAge(m.profile.dob) }}</p>
             <p>{{ m.profile.city || 'N/A' }}</p>
-            <p class="match-score">Match: {{ m.score }}%</p>
+  
+            <!-- Badges -->
+            <div class="badges">
+              <span *ngIf="m.profile.premium" class="badge premium">🌟 Premium</span>
+              <span *ngIf="m.profile.recentlyJoined" class="badge new">🆕 New</span>
+            </div>
+  
+            <!-- Match score -->
+            <div class="match-score">
+              Match: {{ m.score }}%
+              <div class="score-bar">
+                <div class="score-fill" [style.width.%]="m.score"></div>
+              </div>
+            </div>
+  
+            <!-- Mutual interest -->
+            <div *ngIf="m.mutualInterest" class="mutual">💌 Mutual Match</div>
+  
+            <!-- Express Interest -->
+            <button class="interest-btn" (click)="sendInterest(m.profile.id)">
+              💖 Express Interest
+            </button>
           </div>
         </div>
       </div>
@@ -39,8 +63,12 @@
         <!-- 🔹 Photo viewer -->
         <div class="photo-viewer" *ngIf="photoUrls.length > 0">
           <button class="arrow-btn" (click)="prevPhoto()">&#8592;</button>
-          <img [src]="photoUrls[currentPhotoIndex]" alt="Profile Photo" class="clickable"
-               (click)="openFullscreen(currentPhotoIndex)" />
+          <img
+            [src]="photoUrls[currentPhotoIndex]"
+            alt="Profile Photo"
+            class="clickable"
+            (click)="openFullscreen(currentPhotoIndex)"
+          />
           <button class="arrow-btn" (click)="nextPhoto()">&#8594;</button>
         </div>
   
@@ -48,7 +76,11 @@
         <div class="fullscreen-overlay" *ngIf="isFullscreen">
           <span class="close-btn" (click)="closeFullscreen()">&#10005;</span>
           <button class="arrow-btn left" (click)="prevPhoto()">&#8592;</button>
-          <img [src]="photoUrls[currentPhotoIndex]" alt="Fullscreen Photo" class="fullscreen-img" />
+          <img
+            [src]="photoUrls[currentPhotoIndex]"
+            alt="Fullscreen Photo"
+            class="fullscreen-img"
+          />
           <button class="arrow-btn right" (click)="nextPhoto()">&#8594;</button>
         </div>
   
@@ -59,7 +91,7 @@
           <p><strong>DOB:</strong> {{ selectedProfile.dob }}</p>
           <p><strong>Birth Time:</strong> {{ selectedProfile.birthTime }}</p>
           <p><strong>Birth Place:</strong> {{ selectedProfile.birthPlace }}</p>
-          
+  
           <p><strong>Raasi:</strong> {{ selectedProfile.raasi }}</p>
           <p><strong>Natchathiram:</strong> {{ selectedProfile.natchathiram }}</p>
           <p><strong>Laknam:</strong> {{ selectedProfile.laknam }}</p>
@@ -71,7 +103,10 @@
           <p><strong>Marital Status:</strong> {{ selectedProfile.maritalStatus }}</p>
   
           <p><strong>Employment Type:</strong> {{ selectedProfile.employmentType }}</p>
-          <p><strong>Company:</strong> {{ selectedProfile.companyName }} ({{ selectedProfile.companyAddress }})</p>
+          <p>
+            <strong>Company:</strong> {{ selectedProfile.companyName }}
+            ({{ selectedProfile.companyAddress }})
+          </p>
           <p><strong>Income:</strong> {{ selectedProfile.income }}</p>
   
           <p><strong>Height:</strong> {{ selectedProfile.height }} cm</p>
@@ -80,8 +115,16 @@
           <p><strong>Body Type:</strong> {{ selectedProfile.bodyType }}</p>
   
           <p><strong>Kulatheivam:</strong> {{ selectedProfile.kulatheivam }}</p>
-          <p><strong>Father:</strong> {{ selectedProfile.fatherName }} ({{ selectedProfile.fatherOccupation }}) - {{ selectedProfile.fatherContact }}</p>
-          <p><strong>Mother:</strong> {{ selectedProfile.motherName }} ({{ selectedProfile.motherOccupation }}) - {{ selectedProfile.motherContact }}</p>
+          <p>
+            <strong>Father:</strong> {{ selectedProfile.fatherName }}
+            ({{ selectedProfile.fatherOccupation }}) -
+            {{ selectedProfile.fatherContact }}
+          </p>
+          <p>
+            <strong>Mother:</strong> {{ selectedProfile.motherName }}
+            ({{ selectedProfile.motherOccupation }}) -
+            {{ selectedProfile.motherContact }}
+          </p>
           <p><strong>Family Income:</strong> {{ selectedProfile.familyAnnualIncome }}</p>
   
           <p><strong>Brother Details:</strong> {{ selectedProfile.brotherDetails }}</p>
@@ -93,10 +136,25 @@
           <p><strong>Smoking:</strong> {{ selectedProfile.smoking }}</p>
           <p><strong>Drinking:</strong> {{ selectedProfile.drinking }}</p>
   
-          <p><strong>Address:</strong> {{ selectedProfile.addressLine1 }} {{ selectedProfile.addressLine2 }},
-            {{ selectedProfile.city }}, {{ selectedProfile.state }}, {{ selectedProfile.country }} - {{ selectedProfile.pincode }}</p>
+          <p>
+            <strong>Address:</strong> {{ selectedProfile.addressLine1 }}
+            {{ selectedProfile.addressLine2 }}, {{ selectedProfile.city }},
+            {{ selectedProfile.state }}, {{ selectedProfile.country }} -
+            {{ selectedProfile.pincode }}
+          </p>
   
           <p><strong>Profile Created:</strong> {{ selectedProfile.createdDate }}</p>
+        </div>
+  
+        <!-- 🔹 Actions -->
+        <div class="actions">
+          <button (click)="sendInterest(selectedProfile.id)">💖 Express Interest</button>
+          <button (click)="startChat(selectedProfile.id)" [disabled]="!selectedProfile.mutualInterest">
+            💬 Chat
+          </button>
+          <button (click)="startCall(selectedProfile.id)" [disabled]="!selectedProfile.premium">
+            📞 Call
+          </button>
         </div>
       </div>
     </div>
